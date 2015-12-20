@@ -1,0 +1,9 @@
+{
+  "width": 1280,
+  "height": 720,
+  "title": "Engine",
+  "maximumTicksPerRun": 240,
+  "ticksPerRun": 60,
+  "msPerUpdate": 1000,
+  "verticalSyncDisabled": true
+}

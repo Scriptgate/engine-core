@@ -10,6 +10,7 @@ import net.scriptgate.engine.image.TextureLoader;
 import org.lwjgl.system.MemoryUtil;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -240,6 +241,11 @@ public class OpenGLRenderer implements Renderer {
     }
 
     @Override
+    public BufferedImage printScreen() {
+        return OpenGLScreenshotHelper.getScreenshot();
+    }
+
+    @Override
     public void setColor(float r, float g, float b) {
         color.r = r;
         color.g = g;
@@ -257,6 +263,4 @@ public class OpenGLRenderer implements Renderer {
     public void translate(int x, int y) {
         glTranslatef(x, y, 0);
     }
-
-
 }

@@ -4,6 +4,7 @@ import net.scriptgate.common.Color4f;
 import net.scriptgate.common.Point;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public interface Renderer {
     void enableFont();
@@ -39,5 +40,5 @@ public interface Renderer {
 
     void fillRect(int x, int y, int width, int height);
 
-
+    BufferedImage printScreen();
 }

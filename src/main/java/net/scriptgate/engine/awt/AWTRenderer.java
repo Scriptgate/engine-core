@@ -54,8 +54,8 @@ public class AWTRenderer implements Renderer {
 
     @Override
     public void drawImage(int x, int y, String path) {
-        BufferedImage bi = imageLoader.getTexture(path);
-        graphics.drawImage(bi, x, y, null);
+        BufferedImage image = imageLoader.getTexture(path);
+        graphics.drawImage(image, x, y, null);
     }
 
     @Override
@@ -141,5 +141,10 @@ public class AWTRenderer implements Renderer {
     @Override
     public void fillRect(int x, int y, int width, int height) {
         this.graphics.fillRect(x, y, width, height);
+    }
+
+    @Override
+    public BufferedImage printScreen() {
+        throw new UnsupportedOperationException();
     }
 }

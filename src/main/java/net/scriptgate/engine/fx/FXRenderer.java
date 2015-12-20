@@ -6,6 +6,7 @@ import net.scriptgate.common.Point;
 import net.scriptgate.engine.Renderer;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class FXRenderer implements Renderer {
 
@@ -92,5 +93,10 @@ public class FXRenderer implements Renderer {
     public void fillRect(int x, int y, int width, int height) {
         context.setFill(color);
         context.fillRect(x, y, width, height);
+    }
+
+    @Override
+    public BufferedImage printScreen() {
+        throw new UnsupportedOperationException();
     }
 }

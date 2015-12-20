@@ -44,8 +44,8 @@ public class FXRenderer implements Renderer {
     }
 
     @Override
-    public void drawString(int x, int y, String string) {
-        context.strokeText(string, x, y);
+    public void drawString(int x, int y, String text) {
+        context.strokeText(text, x, y);
     }
 
     @Override

@@ -59,8 +59,8 @@ public class AWTRenderer implements Renderer {
     }
 
     @Override
-    public void drawString(int x, int y, String string) {
-        graphics.drawString(string, x, y);
+    public void drawString(int x, int y, String text) {
+        graphics.drawString(text, x, y);
     }
 
     @Override

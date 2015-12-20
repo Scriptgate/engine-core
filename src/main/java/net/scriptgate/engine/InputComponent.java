@@ -59,14 +59,6 @@ public abstract class InputComponent {
         }
     }
 
-    public abstract int up();
-
-    public abstract int down();
-
-    public abstract int left();
-
-    public abstract int right();
-
     public void setMousePressed() {
         mousePressed = true;
     }

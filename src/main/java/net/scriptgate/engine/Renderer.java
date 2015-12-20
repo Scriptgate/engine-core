@@ -22,7 +22,7 @@ public interface Renderer {
 
     void setColor(float r, float g, float b);
 
-    void drawString(int x, int y, String string);
+    void drawString(int x, int y, String text);
 
     void drawImage(int x, int y, String path);
 

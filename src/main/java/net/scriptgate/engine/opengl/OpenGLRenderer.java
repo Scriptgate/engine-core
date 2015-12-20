@@ -3,11 +3,9 @@ package net.scriptgate.engine.opengl;
 import net.scriptgate.common.Color4f;
 import net.scriptgate.common.Point;
 import net.scriptgate.engine.Renderer;
-import net.scriptgate.engine.font.FontRenderer;
 import net.scriptgate.engine.image.ImageLoader;
 import net.scriptgate.engine.image.Texture;
 import net.scriptgate.engine.image.TextureLoader;
-import org.lwjgl.system.MemoryUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,7 +19,6 @@ public class OpenGLRenderer implements Renderer {
     private final Color4f color;
     private final float DEG2RAD = 3.14159f / 180;
     private final ImageLoader<Texture> imageLoader;
-    private final FontRenderer fontRenderer = new FontRenderer();
 
     public OpenGLRenderer() {
         imageLoader = new TextureLoader();
@@ -30,6 +27,7 @@ public class OpenGLRenderer implements Renderer {
 
     @Override
     public void disableFont() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -73,7 +71,7 @@ public class OpenGLRenderer implements Renderer {
 
     @Override
     public void drawImage(int x, int y, Image img) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -151,25 +149,19 @@ public class OpenGLRenderer implements Renderer {
     }
 
     @Override
-    public void drawString(int x, int y, String string) {
-//        fontRenderer.draw(this, x, y, string);
-        glPushMatrix();
-        glRasterPos2f(x, y);
-        glCallLists(MemoryUtil.memEncodeASCII(string));
-        glPopMatrix();
+    public void drawString(int x, int y, String text) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void enableFont() {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void fillCircle(int x, int y, int radius) {
         glPushMatrix();
         glVertex2f(x, y);
-        //glEnable(GL_BLEND);
-        //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glBegin(GL_TRIANGLE_FAN);
         {
             for (int i = 0; i < 360; i++) {
@@ -192,39 +184,6 @@ public class OpenGLRenderer implements Renderer {
         glEnd();
         glPopMatrix();
     }
-
-//    @Override
-//    public void fillOval(float x, float y, float width, float height) {
-//        glPushMatrix();
-//        glVertex2f(x, y);
-//        //glEnable(GL_BLEND);
-//        //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//        glBegin(GL_TRIANGLE_FAN);
-//        {
-//            for (int i = 0; i < 360; i++) {
-//                float degInRad = i * DEG2RAD;
-//                glVertex2f((float) (cos(degInRad) * width / 2 + x), (float) (sin(degInRad) * height / 2 + y));
-//            }
-//        }
-//        glEnd();
-//        glPopMatrix();
-//    }
-
-//    @Override
-//    public void fillPolygon2D(Polygon2D polygon) {
-//        glPushMatrix();
-//
-//        //glEnable(GL_BLEND);
-//        //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//        glBegin(GL_TRIANGLE_FAN);
-//        {
-//            for (Point point : polygon.getPoints()) {
-//                glVertex2f(point.x, point.y);
-//            }
-//        }
-//        glEnd();
-//        glPopMatrix();
-//    }
 
     @Override
     public void fillRect(int x, int y, int width, int height) {

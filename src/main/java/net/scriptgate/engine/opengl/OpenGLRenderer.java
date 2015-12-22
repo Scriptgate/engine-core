@@ -17,7 +17,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class OpenGLRenderer implements Renderer {
 
     private final Color4f color;
-    private final float DEG2RAD = 3.14159f / 180;
+    private static final float DEG2RAD = 3.14159f / 180;
     private final ImageLoader<Texture> imageLoader;
 
     public OpenGLRenderer() {
@@ -42,12 +42,12 @@ public class OpenGLRenderer implements Renderer {
         glPushMatrix();
         texture.bind();
 
-//        middle center
-//        glTranslatef(x - width / 2, y - height / 2, 0);
-//        top middle
+//      middle center
+//      glTranslatef(x - width / 2, y - height / 2, 0);
+//      top middle
         glTranslatef(x - width / 2, y, 0);
-//        top left
-//        glTranslatef(x, y, 0);
+//      top left
+//      glTranslatef(x, y, 0);
 
         glBegin(GL_QUADS);
         {
@@ -87,10 +87,10 @@ public class OpenGLRenderer implements Renderer {
         int width = texture.getImageWidth();
         int height = texture.getImageHeight();
 
-//        middle center
-//        glTranslatef(position.x - width / 2, position.y - height / 2, 0);
-//        top left
-//        glTranslatef(position.x, position.y, 0);
+//      middle center
+//      glTranslatef(position.x - width / 2, position.y - height / 2, 0);
+//      top left
+//      glTranslatef(position.x, position.y, 0);
         glTranslatef(position.x - width / 2, position.y, 0);
 
 
@@ -150,7 +150,6 @@ public class OpenGLRenderer implements Renderer {
 
     @Override
     public void drawString(int x, int y, String text) {
-        throw new UnsupportedOperationException();
     }
 
     @Override

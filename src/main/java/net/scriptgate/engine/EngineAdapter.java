@@ -23,12 +23,16 @@ public class EngineAdapter extends Engine {
 
     @Override
     protected void initialize() {
-        super.initialize();
         application.initialize();
     }
 
     @Override
     protected void render() {
         application.render(renderer);
+    }
+
+    @Override
+    public void destroy() {
+        application.destroy();
     }
 }

@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutorService;
 
-import static java.lang.System.*;
+import static java.lang.System.currentTimeMillis;
+import static java.lang.System.nanoTime;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 public abstract class Engine implements Runnable {
@@ -42,6 +43,7 @@ public abstract class Engine implements Runnable {
     @Override
     public void run() {
         if (initialized) {
+            initializeProperties();
             initialize();
             initialized = false;
             lastTime = nanoTime();
@@ -82,7 +84,7 @@ public abstract class Engine implements Runnable {
         if (isRunning()) {
             scheduler.execute(this);
         } else {
-            shutdown();
+            destroy();
         }
     }
 
@@ -90,7 +92,9 @@ public abstract class Engine implements Runnable {
 
     protected abstract void onUpdate(int ticks, int frames);
 
-    protected void initialize() {
+    protected abstract void initialize();
+
+    private void initializeProperties() {
         ObjectMapper mapper = new ObjectMapper();
         try (InputStream engineProperties = Engine.class.getClassLoader().getResourceAsStream("properties/engine.json")) {
             JsonNode properties = mapper.readTree(engineProperties);
@@ -121,7 +125,5 @@ public abstract class Engine implements Runnable {
         running = false;
     }
 
-    public void shutdown() {
-        exit(0);
-    }
+    public abstract void destroy();
 }

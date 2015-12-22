@@ -86,4 +86,10 @@ public class FXEngine extends EngineAdapter {
         graphicsContext2D.setFill(new Color(BG_COLOR.r, BG_COLOR.g, BG_COLOR.b, BG_COLOR.a));
         graphicsContext2D.fillRect(0, 0, WIDTH, HEIGHT);
     }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        System.exit(0);
+    }
 }

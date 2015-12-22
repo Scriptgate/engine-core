@@ -34,7 +34,7 @@ public class OpenGLEngine extends EngineAdapter {
     public OpenGLEngine(Application application, InputComponent input) {
         super(application, new OpenGLRenderer(), input);
 
-        //TODO: Is it possible to redirect error callback to log?
+//      TODO: Is it possible to redirect error callback to log?
         errorCallback = GLFWErrorCallback.createPrint(System.err);
 
         keyCallback = new GLFWKeyCallback() {
@@ -87,13 +87,14 @@ public class OpenGLEngine extends EngineAdapter {
         windowSizeCallback = new GLFWWindowSizeCallback() {
             @Override
             public void invoke(long window, int width, int height) {
-                //TODO: Support resizing
-//                Engine.WIDTH = width;
-//                Engine.HEIGHT = height;
+//              TODO: Support resizing
+//              Engine.WIDTH = width;
+//              Engine.HEIGHT = height;
 
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
                 glOrtho(0.0, width, height, 0.0, -1.0, 1.0);
+
                 glMatrixMode(GL_MODELVIEW);
             }
         };
@@ -101,6 +102,15 @@ public class OpenGLEngine extends EngineAdapter {
         framebufferSizeCallback = new GLFWFramebufferSizeCallback() {
             @Override
             public void invoke(long window, int width, int height) {
+/*
+                While the size of a window is measured in screen coordinates, OpenGL works with pixels.
+                The size you pass into glViewport, for example, should be in pixels. On some machines screen
+                coordinates and pixels are the same, but on others they will not be. There is a second
+                set of functions to retrieve the size, in pixels, of the framebuffer of a window.
+
+                If you wish to be notified when the framebuffer of a window is resized, whether by the user
+                or the system, set a size callback.
+*/
                 glViewport(0, 0, width, height);
             }
         };
@@ -134,7 +144,6 @@ public class OpenGLEngine extends EngineAdapter {
 
     @Override
     protected void initialize() {
-        super.initialize();
         window = glfwCreateWindow(WIDTH, HEIGHT, TITLE, NULL, NULL);
 
         if (window == NULL) {
@@ -147,7 +156,7 @@ public class OpenGLEngine extends EngineAdapter {
         mouseButtonCallback.set(window);
         cursorPosCallback.set(window);
 
-        // Center window
+//      Center window
         GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         glfwSetWindowPos(window,
                 (vidmode.width() - WIDTH) / 2,
@@ -161,20 +170,35 @@ public class OpenGLEngine extends EngineAdapter {
 
         glfwSwapInterval(verticalSyncDisabled ? 0 : 1);
 
-        //2D, in-order-rendering, disable depth test
+/*
+        https://www.opengl.org/wiki/GLSL_:_common_mistakes#Enable_Or_Not_To_Enable
+        Enable Or Not To Enable
+
+        With fixed pipeline, you needed to call glEnable(GL_TEXTURE_2D) to enable 2D texturing.
+        You also needed to call glEnable(GL_LIGHTING). Since shaders override these functionalities,
+        you don't need to glEnable/glDisable. If you don't want texturing, you either need to write
+        another shader that doesn't do texturing, or you can attach an all-white or all-black texture,
+        depending on your needs. You can also write one shader that does lighting and one that doesn't.
+        For things that are not overriden by shaders, like the alpha test, depth test, stencil test,
+        calling glEnable/glDisable will have an effect.
+*/
+
+//      2D, in-order-rendering, disable depth test
         glDisable(GL_DEPTH_TEST);
-        //We use transparency, so enable blending
+//      We use transparency, so enable blending
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glClearColor(BG_COLOR.r, BG_COLOR.g, BG_COLOR.b, BG_COLOR.a);
 
         glfwShowWindow(window);
         glfwInvoke(window, windowSizeCallback, framebufferSizeCallback);
+        super.initialize();
     }
 
     @Override
     protected void render() {
-        glClearColor(BG_COLOR.r, BG_COLOR.g, BG_COLOR.b, BG_COLOR.a);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
+
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
@@ -184,7 +208,8 @@ public class OpenGLEngine extends EngineAdapter {
     }
 
     @Override
-    public void shutdown() {
+    public void destroy() {
+        super.destroy();
         try {
             if (debugCallback != null) {
                 debugCallback.release();

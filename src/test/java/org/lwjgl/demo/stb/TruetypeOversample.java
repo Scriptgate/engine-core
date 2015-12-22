@@ -27,7 +27,7 @@ import static org.lwjgl.stb.STBTruetype.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 /**
- * STB Truetype oversampling demo.
+ * STB TrueType oversampling demo.
  *
  * <p>This is a Java port of <a href="https://github.com/nothings/stb/blob/master/tests/oversample/main.c">https://github
  * .com/nothings/stb/blob/master/tests/oversample/main.c</a>.</p>
@@ -156,7 +156,7 @@ public final class TruetypeOversample {
 	}
 
 	public static void main(String[] args) {
-		new TruetypeOversample().run("STB Truetype Oversample Demo");
+		new TruetypeOversample().run("STB TrueType Oversample Demo");
 	}
 
 	private void load_fonts() {

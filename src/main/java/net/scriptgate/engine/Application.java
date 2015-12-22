@@ -19,4 +19,8 @@ public interface Application {
 
     default void onKeyDown(int key) {
     }
+
+    default void destroy() {
+        
+    }
 }

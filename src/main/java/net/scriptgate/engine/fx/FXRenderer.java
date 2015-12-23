@@ -44,6 +44,11 @@ public class FXRenderer implements Renderer {
     }
 
     @Override
+    public void setColor(float a, float r, float g, float b) {
+        this.color = new Color(r, g, b, a);
+    }
+
+    @Override
     public void drawString(int x, int y, String text) {
         context.strokeText(text, x, y);
     }
@@ -65,16 +70,9 @@ public class FXRenderer implements Renderer {
 
     @Override
     public void drawLine(int x1, int y1, int x2, int y2) {
-
-
         context.setStroke(color);
         context.setLineWidth(1);
         context.strokeLine(x1, y1, x2, y2);
-    }
-
-    @Override
-    public void drawLine(Point from, net.scriptgate.common.Point to) {
-        throw new UnsupportedOperationException();
     }
 
     @Override

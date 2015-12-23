@@ -34,16 +34,14 @@ public class TextureLoader extends ImageLoader<Texture> {
     @Override
     public Texture loadTexture(String path) {
 
-        int target = GL_TEXTURE_2D;
-        int srcPixelFormat;
 
         int textureID = createTextureID();
-        Texture texture = new Texture(target, textureID);
-
-        glBindTexture(target, textureID);
+        Texture texture = new Texture(textureID);
+        texture.bind();
 
         BufferedImage bufferedImage = loadImage(path);
 
+        int srcPixelFormat;
         if (bufferedImage.getColorModel().hasAlpha()) {
             srcPixelFormat = GL_RGBA;
         } else {
@@ -56,7 +54,7 @@ public class TextureLoader extends ImageLoader<Texture> {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
 
 
-        glTexImage2D(target, 0, GL_RGBA,
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
                 texture.getBinaryWidth(),
                 texture.getBinaryHeight(),
                 0, srcPixelFormat, GL_UNSIGNED_BYTE, textureBuffer);

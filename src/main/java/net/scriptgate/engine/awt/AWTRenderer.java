@@ -87,6 +87,20 @@ public class AWTRenderer implements Renderer {
     }
 
     @Override
+    public void setColor(float a, float r, float g, float b) {
+        color.a = a;
+        color.r = r;
+        color.g = g;
+        color.b = b;
+        graphics.setColor(new java.awt.Color(
+                color.r,
+                color.g,
+                color.b,
+                color.a
+        ));
+    }
+
+    @Override
     public void setOpacity(float a) {
         color.a = a;
         graphics.setComposite(getInstance(SRC_OVER, color.a));
@@ -114,11 +128,6 @@ public class AWTRenderer implements Renderer {
     @Override
     public void drawImage(int x, int y, Image img) {
         this.graphics.drawImage(img, x, y, null);
-    }
-
-    @Override
-    public void drawLine(Point from, net.scriptgate.common.Point to) {
-        drawLine(from.x, from.y, to.x, to.y);
     }
 
     @Override

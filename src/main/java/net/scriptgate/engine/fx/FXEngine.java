@@ -83,7 +83,7 @@ public class FXEngine extends EngineAdapter {
     }
 
     private void clearScreen(GraphicsContext graphicsContext2D) {
-        graphicsContext2D.setFill(new Color(BG_COLOR.r, BG_COLOR.g, BG_COLOR.b, BG_COLOR.a));
+        graphicsContext2D.setFill(new Color(BG_COLOR.r, BG_COLOR.g, BG_COLOR.b, 1.0f));
         graphicsContext2D.fillRect(0, 0, WIDTH, HEIGHT);
     }
 

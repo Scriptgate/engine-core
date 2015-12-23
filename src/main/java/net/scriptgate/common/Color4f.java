@@ -23,8 +23,4 @@ public class Color4f {
     public static Color4f fromInt(float a, int r, int g, int b) {
         return new Color4f(a, r / 255f, g / 255f, b / 255f);
     }
-
-    public static Color4f fromInt(int r, int g, int b) {
-        return fromInt(1, r, g, b);
-    }
 }

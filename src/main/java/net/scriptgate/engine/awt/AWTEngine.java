@@ -90,7 +90,7 @@ public class AWTEngine extends EngineAdapter {
     }
 
     private void clearScreen(Graphics2D graphics) {
-        graphics.setColor(new Color(BG_COLOR.r, BG_COLOR.g, BG_COLOR.b, BG_COLOR.a));
+        graphics.setColor(new Color(BG_COLOR.r, BG_COLOR.g, BG_COLOR.b, 1.0f));
         graphics.fillRect(0, 0, WIDTH, HEIGHT);
     }
 

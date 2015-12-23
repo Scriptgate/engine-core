@@ -35,4 +35,10 @@ public class EngineAdapter extends Engine {
     public void destroy() {
         application.destroy();
     }
+
+    @Override
+    protected void initializeProperties() {
+        super.initializeProperties();
+        application.initializeProperties();
+    }
 }

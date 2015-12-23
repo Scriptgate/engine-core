@@ -54,13 +54,13 @@ public abstract class ImageLoader<T> {
     }
 
     public T getTexture(String resourceName) {
-        T tex = repository.get(resourceName);
-        if (tex != null) {
-            return tex;
+        T texture = repository.get(resourceName);
+        if (texture != null) {
+            return texture;
         }
-        tex = loadTexture(resourceName);
-        repository.put(resourceName, tex);
-        return tex;
+        texture = loadTexture(resourceName);
+        repository.put(resourceName, texture);
+        return texture;
     }
 
     protected abstract T loadTexture(String path);

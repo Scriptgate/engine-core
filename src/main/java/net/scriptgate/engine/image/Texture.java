@@ -2,9 +2,10 @@ package net.scriptgate.engine.image;
 
 import org.lwjgl.opengl.GL11;
 
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+
 public class Texture {
 
-    private final int target;
     private final int textureID;
     private int binaryWidth;
     private int binaryHeight;
@@ -13,13 +14,12 @@ public class Texture {
     private float widthToBinaryWidthRatio;
     private float heightToBinaryHeightRatio;
 
-    public Texture(int target, int textureID) {
-        this.target = target;
+    public Texture(int textureID) {
         this.textureID = textureID;
     }
 
     public void bind() {
-        GL11.glBindTexture(target, textureID);
+        GL11.glBindTexture(GL_TEXTURE_2D, textureID);
     }
 
     public int getImageHeight() {

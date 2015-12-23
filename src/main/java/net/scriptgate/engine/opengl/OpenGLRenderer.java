@@ -32,7 +32,6 @@ public class OpenGLRenderer implements Renderer {
 
     @Override
     public void drawImage(int x, int y, String path) {
-
         glEnable(GL_TEXTURE_2D);
 
         Texture texture = imageLoader.getTexture(path);
@@ -40,6 +39,7 @@ public class OpenGLRenderer implements Renderer {
         int height = texture.getImageHeight();
 
         glPushMatrix();
+
         texture.bind();
 
 //      middle center
@@ -66,6 +66,7 @@ public class OpenGLRenderer implements Renderer {
         glEnd();
 
         glPopMatrix();
+
         glDisable(GL_TEXTURE_2D);
     }
 
@@ -76,13 +77,12 @@ public class OpenGLRenderer implements Renderer {
 
     @Override
     public void drawImage(String imagePath, Point position, Point offset, Point size) {
-
         glEnable(GL_TEXTURE_2D);
 
         Texture texture = imageLoader.getTexture(imagePath);
+        texture.bind();
 
         glPushMatrix();
-        texture.bind();
 
         int width = texture.getImageWidth();
         int height = texture.getImageHeight();
@@ -92,7 +92,6 @@ public class OpenGLRenderer implements Renderer {
 //      top left
 //      glTranslatef(position.x, position.y, 0);
         glTranslatef(position.x - width / 2, position.y, 0);
-
 
         glBegin(GL_QUADS);
         {
@@ -116,21 +115,19 @@ public class OpenGLRenderer implements Renderer {
         glEnd();
 
         glPopMatrix();
+
         glDisable(GL_TEXTURE_2D);
     }
 
     @Override
-    public void drawLine(Point from, net.scriptgate.common.Point to) {
-        drawLine(from.x, from.y, to.x, to.y);
-    }
-
-    @Override
     public void drawRect(int x, int y, int width, int height) {
+        glDisable(GL_TEXTURE_2D);
+
         glPushMatrix();
+
         glTranslatef(x, y, 0);
         glBegin(GL_LINE_STRIP);
         {
-
             glVertex2f(0, 0);
             glVertex2f(width, 0);
 
@@ -144,8 +141,10 @@ public class OpenGLRenderer implements Renderer {
             glVertex2f(0, 0);
         }
         glEnd();
+
         glPopMatrix();
 
+        glEnable(GL_TEXTURE_2D);
     }
 
     @Override
@@ -159,34 +158,51 @@ public class OpenGLRenderer implements Renderer {
 
     @Override
     public void fillCircle(int x, int y, int radius) {
+        glDisable(GL_TEXTURE_2D);
+
         glPushMatrix();
+
         glVertex2f(x, y);
         glBegin(GL_TRIANGLE_FAN);
         {
             for (int i = 0; i < 360; i++) {
                 float degInRad = i * DEG2RAD;
-                glVertex2f((float) (cos(degInRad) * radius + x), (float) (sin(degInRad) * radius + y));
+                glVertex2f(
+                        (float) (x + radius * cos(degInRad)),
+                        (float) (y + radius * sin(degInRad)));
             }
         }
         glEnd();
+
         glPopMatrix();
+
+        glEnable(GL_TEXTURE_2D);
     }
 
     @Override
     public void drawLine(int x1, int y1, int x2, int y2) {
+        glDisable(GL_TEXTURE_2D);
+
         glPushMatrix();
+
         glBegin(GL_LINE_STRIP);
         {
             glVertex2f(x1, y1);
             glVertex2f(x2, y2);
         }
         glEnd();
+
         glPopMatrix();
+
+        glEnable(GL_TEXTURE_2D);
     }
 
     @Override
     public void fillRect(int x, int y, int width, int height) {
+        glDisable(GL_TEXTURE_2D);
+
         glPushMatrix();
+
         glBegin(GL_QUADS);
         {
             glVertex2f(x, y);
@@ -195,7 +211,10 @@ public class OpenGLRenderer implements Renderer {
             glVertex2f(x, y + height);
         }
         glEnd();
+
         glPopMatrix();
+
+        glEnable(GL_TEXTURE_2D);
     }
 
     @Override
@@ -205,6 +224,15 @@ public class OpenGLRenderer implements Renderer {
 
     @Override
     public void setColor(float r, float g, float b) {
+        color.r = r;
+        color.g = g;
+        color.b = b;
+        glColor4f(color.r, color.g, color.b, color.a);
+    }
+
+    @Override
+    public void setColor(float a, float r, float g, float b) {
+        color.a = a;
         color.r = r;
         color.g = g;
         color.b = b;

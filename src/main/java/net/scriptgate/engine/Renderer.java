@@ -1,5 +1,6 @@
 package net.scriptgate.engine;
 
+import net.scriptgate.common.Color3f;
 import net.scriptgate.common.Color4f;
 import net.scriptgate.common.Point;
 
@@ -13,14 +14,19 @@ public interface Renderer {
 
     void translate(int x, int y);
 
-    default void setColor(Color4f color) {
-//        setOpacity(color.a);
+    default void setColor(Color3f color) {
         setColor(color.r, color.g, color.b);
+    }
+
+    default void setColor(Color4f color) {
+        setColor(color.a, color.r, color.g, color.b);
     }
 
     void setOpacity(float a);
 
     void setColor(float r, float g, float b);
+
+    void setColor(float a, float r, float g, float b);
 
     void drawString(int x, int y, String text);
 
@@ -32,7 +38,9 @@ public interface Renderer {
 
     void drawLine(int x1, int y1, int x2, int y2);
 
-    void drawLine(net.scriptgate.common.Point from, Point to);
+    default void drawLine(Point from, Point to) {
+        drawLine(from.x, from.y, to.x, to.y);
+    }
 
     void fillCircle(int x, int y, int radius);
 

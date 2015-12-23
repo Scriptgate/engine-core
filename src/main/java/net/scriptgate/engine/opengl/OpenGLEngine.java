@@ -188,7 +188,7 @@ public class OpenGLEngine extends EngineAdapter {
 //      We use transparency, so enable blending
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glClearColor(BG_COLOR.r, BG_COLOR.g, BG_COLOR.b, BG_COLOR.a);
+        glClearColor(BG_COLOR.r, BG_COLOR.g, BG_COLOR.b, 1.0f);
 
         glfwShowWindow(window);
         glfwInvoke(window, windowSizeCallback, framebufferSizeCallback);

@@ -2,7 +2,7 @@ package net.scriptgate.engine;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.scriptgate.common.Color4f;
+import net.scriptgate.common.Color3f;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +16,7 @@ public abstract class Engine implements Runnable {
 
     public static int WIDTH;
     public static int HEIGHT;
-    public static Color4f BG_COLOR = Color4f.fromInt(43, 43, 43);
+    public static Color3f BG_COLOR = Color3f.fromInt(43, 43, 43);
 
     public static String TITLE;
     protected final ExecutorService scheduler;
@@ -94,7 +94,7 @@ public abstract class Engine implements Runnable {
 
     protected abstract void initialize();
 
-    private void initializeProperties() {
+    protected void initializeProperties() {
         ObjectMapper mapper = new ObjectMapper();
         try (InputStream engineProperties = Engine.class.getClassLoader().getResourceAsStream("properties/engine.json")) {
             JsonNode properties = mapper.readTree(engineProperties);

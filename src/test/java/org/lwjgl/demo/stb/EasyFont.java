@@ -1,8 +1,6 @@
 package org.lwjgl.demo.stb;
 
 
-import net.scriptgate.engine.opengl.EasyFontRenderer;
-
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 

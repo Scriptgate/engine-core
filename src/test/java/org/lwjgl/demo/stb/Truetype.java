@@ -4,8 +4,6 @@
  */
 package org.lwjgl.demo.stb;
 
-import net.scriptgate.engine.opengl.TrueTypeFontRenderer;
-
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -17,8 +15,8 @@ public final class TrueType extends FontDemo {
     private TrueTypeFontRenderer fontRenderer;
 
     private TrueType(String filePath) {
-        super(24, filePath);
-        fontRenderer = new TrueTypeFontRenderer(12, "demo/Fantasque.ttf");
+        super(14, filePath);
+        fontRenderer = new TrueTypeFontRenderer(14, "demo/Fantasque.ttf");
     }
 
     public static void main(String[] args) {

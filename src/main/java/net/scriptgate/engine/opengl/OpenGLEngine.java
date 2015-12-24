@@ -94,8 +94,8 @@ public class OpenGLEngine extends EngineAdapter {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
                 glOrtho(0.0, width, height, 0.0, -1.0, 1.0);
-
                 glMatrixMode(GL_MODELVIEW);
+                glLoadIdentity();
             }
         };
 
@@ -198,9 +198,6 @@ public class OpenGLEngine extends EngineAdapter {
     @Override
     protected void render() {
         glClear(GL_COLOR_BUFFER_BIT);
-
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
 
         application.render(renderer);
 

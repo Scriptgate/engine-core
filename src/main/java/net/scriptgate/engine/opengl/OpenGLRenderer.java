@@ -126,19 +126,12 @@ public class OpenGLRenderer implements Renderer {
         glPushMatrix();
 
         glTranslatef(x, y, 0);
-        glBegin(GL_LINE_STRIP);
+        glBegin(GL_LINE_LOOP);
         {
             glVertex2f(0, 0);
             glVertex2f(width, 0);
-
-            glVertex2f(width, 0);
             glVertex2f(width, height);
-
             glVertex2f(0, height);
-            glVertex2f(width, height);
-
-            glVertex2f(0, height);
-            glVertex2f(0, 0);
         }
         glEnd();
 
@@ -167,9 +160,9 @@ public class OpenGLRenderer implements Renderer {
         {
             for (int i = 0; i < 360; i++) {
                 float degInRad = i * DEG2RAD;
-                glVertex2f(
-                        (float) (x + radius * cos(degInRad)),
-                        (float) (y + radius * sin(degInRad)));
+                glVertex2d(
+                        x + radius * cos(degInRad),
+                        y + radius * sin(degInRad));
             }
         }
         glEnd();
@@ -185,10 +178,33 @@ public class OpenGLRenderer implements Renderer {
 
         glPushMatrix();
 
-        glBegin(GL_LINE_STRIP);
+        glBegin(GL_LINES);
         {
             glVertex2f(x1, y1);
             glVertex2f(x2, y2);
+        }
+        glEnd();
+
+        glPopMatrix();
+
+        glEnable(GL_TEXTURE_2D);
+    }
+
+    @Override
+    public void drawCircle(int x, int y, int radius) {
+        glDisable(GL_TEXTURE_2D);
+
+        glPushMatrix();
+
+        glVertex2f(x, y);
+        glBegin(GL_LINE_LOOP);
+        {
+            for (int i = 0; i < 360; i++) {
+                float degInRad = i * DEG2RAD;
+                glVertex2d(
+                        x + radius * cos(degInRad),
+                        y + radius * sin(degInRad));
+            }
         }
         glEnd();
 

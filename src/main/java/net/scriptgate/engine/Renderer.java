@@ -42,6 +42,8 @@ public interface Renderer {
         drawLine(from.x, from.y, to.x, to.y);
     }
 
+    void drawCircle(int x, int y, int radius);
+
     void fillCircle(int x, int y, int radius);
 
     void drawRect(int x, int y, int width, int height);

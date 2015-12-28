@@ -8,6 +8,8 @@ import static net.scriptgate.engine.ApplicationType.OPENGL;
 
 public class TrueType implements Application {
 
+    private String text;
+
     public static void main(String[] args) {
         run(new TrueType()).in(OPENGL);
     }
@@ -15,7 +17,8 @@ public class TrueType implements Application {
     private TrueTypeFontRenderer fontRenderer;
 
     public TrueType() {
-        this.fontRenderer = new TrueTypeFontRenderer(12, "demo/Fantasque.ttf");
+        this.fontRenderer = new TrueTypeFontRenderer(8, "demo/Ricasso.ttf");
+        text = "Story#123";
     }
 
     @Override
@@ -25,7 +28,7 @@ public class TrueType implements Application {
 
     @Override
     public void render(Renderer renderer) {
-        fontRenderer.render("STOR1000", 1, 0);
+        fontRenderer.render(100,100, text);
     }
 
     @Override

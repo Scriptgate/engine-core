@@ -15,13 +15,13 @@ import static org.lwjgl.stb.STBTruetype.stbtt_BakeFontBitmap;
 import static org.lwjgl.stb.STBTruetype.stbtt_GetBakedQuad;
 
 
-public class TrueTypeFontRenderer {
+class TrueTypeFontRenderer {
 
     private final int fontHeight;
     private final String fontFile;
-    private FloatBuffer x;
-    private FloatBuffer y;
-    private STBTTAlignedQuad q;
+    private FloatBuffer xBuffer;
+    private FloatBuffer yBuffer;
+    private STBTTAlignedQuad quad;
     private STBTTBakedChar.Buffer cdata;
     private int BITMAP_W;
     private int BITMAP_H;
@@ -31,52 +31,54 @@ public class TrueTypeFontRenderer {
         this.fontFile = fontFile;
     }
 
-    public void render(String text, float scale, int lineOffset) {
+    public void render(int x, int y, String text) {
+
+        glEnable(GL_TEXTURE_2D);
+
         glColor3f(1, 1, 1); // Text color
 
-        float scaleFactor = 1.0f + scale * 0.25f;
-
         glPushMatrix();
-        // Zoom
-        glScalef(scaleFactor, scaleFactor, 1f);
-        // Scroll
-        glTranslatef(4.0f, fontHeight * 0.5f + 4.0f - lineOffset * fontHeight, 0f);
 
-        x.put(0, 0.0f);
-        y.put(0, 0.0f);
+        glTranslatef(x, y + fontHeight, 0f);
+
+        xBuffer.put(0, 0.0f);
+        yBuffer.put(0, 0.0f);
         glBegin(GL_QUADS);
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
             if (c == '\n') {
-                y.put(0, y.get(0) + fontHeight);
-                x.put(0, 0.0f);
+                yBuffer.put(0, yBuffer.get(0) + fontHeight);
+                xBuffer.put(0, 0.0f);
                 continue;
             } else if (c < 32 || 128 <= c)
                 continue;
 
-            stbtt_GetBakedQuad(cdata, BITMAP_W, BITMAP_H, c - 32, x, y, q, 1);
+            stbtt_GetBakedQuad(cdata, BITMAP_W, BITMAP_H, c - 32, xBuffer, yBuffer, quad, 1);
 
-            glTexCoord2f(q.s0(), q.t0());
-            glVertex2f(q.x0(), q.y0());
+            glTexCoord2f(quad.s0(), quad.t0());
+            glVertex2f(quad.x0(), quad.y0());
 
-            glTexCoord2f(q.s1(), q.t0());
-            glVertex2f(q.x1(), q.y0());
+            glTexCoord2f(quad.s1(), quad.t0());
+            glVertex2f(quad.x1(), quad.y0());
 
-            glTexCoord2f(q.s1(), q.t1());
-            glVertex2f(q.x1(), q.y1());
+            glTexCoord2f(quad.s1(), quad.t1());
+            glVertex2f(quad.x1(), quad.y1());
 
-            glTexCoord2f(q.s0(), q.t1());
-            glVertex2f(q.x0(), q.y1());
+            glTexCoord2f(quad.s0(), quad.t1());
+            glVertex2f(quad.x0(), quad.y1());
         }
         glEnd();
 
         glPopMatrix();
+
+        glDisable(GL_TEXTURE_2D);
     }
 
     public void initialize() {
-        x = BufferUtils.createFloatBuffer(1);
-        y = BufferUtils.createFloatBuffer(1);
-        q = STBTTAlignedQuad.malloc();
+        glEnable(GL_TEXTURE_2D);
+        xBuffer = BufferUtils.createFloatBuffer(1);
+        yBuffer = BufferUtils.createFloatBuffer(1);
+        quad = STBTTAlignedQuad.malloc();
 
         BITMAP_W = 512;
         BITMAP_H = 512;
@@ -97,10 +99,11 @@ public class TrueTypeFontRenderer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        glDisable(GL_TEXTURE_2D);
     }
 
     public void destroy() {
-        q.free();
+        quad.free();
         MemoryUtil.memFree(cdata);
     }
 }

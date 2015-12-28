@@ -76,6 +76,11 @@ public class FXRenderer implements Renderer {
     }
 
     @Override
+    public void drawCircle(int x, int y, int radius) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void fillCircle(int x, int y, int radius) {
         throw new UnsupportedOperationException();
     }

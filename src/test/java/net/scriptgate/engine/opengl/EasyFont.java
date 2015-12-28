@@ -13,19 +13,22 @@ public class EasyFont implements Application {
     }
 
     private EasyFontRenderer fontRenderer;
+    private String text;
 
     public EasyFont() {
-        this.fontRenderer = new EasyFontRenderer(12);
+        this.fontRenderer = new EasyFontRenderer();
     }
 
     @Override
     public void initialize() {
         fontRenderer.initialize();
+        text = "1234567111";
+        System.out.println(text.length());
     }
 
     @Override
     public void render(Renderer renderer) {
-        fontRenderer.render("STOR1000000000000000000000000000000000000000000000000000000000000000000000000000000002313212312312312312312315555", 1, 0);
+        fontRenderer.render(10, 10, text);
     }
 
     @Override

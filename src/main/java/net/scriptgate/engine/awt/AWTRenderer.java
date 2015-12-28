@@ -74,6 +74,11 @@ public class AWTRenderer implements Renderer {
     }
 
     @Override
+    public void drawCircle(int x, int y, int radius) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void setColor(float r, float g, float b) {
         color.r = r;
         color.g = g;

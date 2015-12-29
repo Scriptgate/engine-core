@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.Math.*;
-import static org.lwjgl.demo.util.IOUtil.ioResourceToByteBuffer;
+import static net.scriptgate.engine.util.IOUtil.ioResourceToByteBuffer;
 import static org.lwjgl.glfw.Callbacks.glfwInvoke;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;

@@ -14,10 +14,10 @@ public class TrueType implements Application {
         run(new TrueType()).in(OPENGL);
     }
 
-    private TrueTypeFontRenderer fontRenderer;
+    private OpenGLTTFRenderer fontRenderer;
 
     public TrueType() {
-        this.fontRenderer = new TrueTypeFontRenderer(8, "demo/Ricasso.ttf");
+        this.fontRenderer = new OpenGLTTFRenderer(8, "demo/Ricasso.ttf");
         text = "Story#123";
     }
 

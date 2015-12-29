@@ -35,8 +35,8 @@ public class OpenGLRenderer implements Renderer {
         glEnable(GL_TEXTURE_2D);
 
         Texture texture = imageLoader.getTexture(path);
-        int width = texture.getImageWidth();
-        int height = texture.getImageHeight();
+        int width = texture.getWidth();
+        int height = texture.getHeight();
 
         glPushMatrix();
 
@@ -51,17 +51,9 @@ public class OpenGLRenderer implements Renderer {
 
         glBegin(GL_QUADS);
         {
-            glTexCoord2f(0, 0);
-            glVertex2f(0, 0);
-
-            glTexCoord2f(0, texture.getHeightToBinaryHeightRatio());
-            glVertex2f(0, height);
-
-            glTexCoord2f(texture.getWidthToBinaryWidthRatio(), texture.getHeightToBinaryHeightRatio());
-            glVertex2f(width, height);
-
-            glTexCoord2f(texture.getWidthToBinaryWidthRatio(), 0);
-            glVertex2f(width, 0);
+            drawBoxedTexCoords(
+                    0, 0, width, height,
+                    0, 0, texture.s1(), texture.t1());
         }
         glEnd();
 
@@ -84,8 +76,8 @@ public class OpenGLRenderer implements Renderer {
 
         glPushMatrix();
 
-        int width = texture.getImageWidth();
-        int height = texture.getImageHeight();
+        int width = texture.getWidth();
+        int height = texture.getHeight();
 
 //      middle center
 //      glTranslatef(position.x - width / 2, position.y - height / 2, 0);
@@ -95,22 +87,14 @@ public class OpenGLRenderer implements Renderer {
 
         glBegin(GL_QUADS);
         {
-            float ox = (float) (offset.x) / texture.getBinaryWidth();
-            float oy = (float) (offset.y) / texture.getBinaryHeight();
-            float sx = (float) (size.x) / texture.getBinaryWidth();
-            float sy = (float) (size.y) / texture.getBinaryHeight();
+            float s0 = texture.getPercentageOfWidth(offset.x);
+            float t0 = texture.getPercentageOfHeight(offset.y);
+            float s1 = texture.getPercentageOfWidth(offset.x + size.x);
+            float t1 = texture.getPercentageOfHeight(offset.y + size.y);
 
-            glTexCoord2f(ox, oy);
-            glVertex2f(0, 0);
-
-            glTexCoord2f(ox, oy + sy);
-            glVertex2f(0, size.y);
-
-            glTexCoord2f(ox + sx, oy + sy);
-            glVertex2f(size.x, size.y);
-
-            glTexCoord2f(ox + sx, oy);
-            glVertex2f(size.x, 0);
+            drawBoxedTexCoords(
+                    0, 0, size.x, size.y,
+                    s0, t0, s1, t1);
         }
         glEnd();
 
@@ -118,6 +102,29 @@ public class OpenGLRenderer implements Renderer {
 
         glDisable(GL_TEXTURE_2D);
     }
+
+    /**
+     * @param x0 the x coordinate of the first corner of the destination rectangle.
+     * @param y0 the y coordinate of the first corner of the destination rectangle.
+     * @param x1 the x coordinate of the second corner of the destination rectangle.
+     * @param y1 the y coordinate of the second corner of the destination rectangle.
+     * @param s0 the x component of the first corner of the source rectangle.
+     *           This is a percentage of the width of the texture.
+     * @param t0 the y component of the first corner of the source rectangle.
+     *           This is a percentage of the height of the texture.
+     * @param s1 the x component of the second corner of the source rectangle.
+     *           This is a percentage of the width of the texture.
+     * @param t1 the y component of the second corner of the source rectangle.
+     *           This is a percentage of the height of the texture.
+     */
+    //@formatter:off
+    static void drawBoxedTexCoords(float x0, float y0, float x1, float y1, float s0, float t0, float s1, float t1) {
+        glTexCoord2f(s0, t0);   glVertex2f(x0, y0);
+        glTexCoord2f(s1, t0);   glVertex2f(x1, y0);
+        glTexCoord2f(s1, t1);   glVertex2f(x1, y1);
+        glTexCoord2f(s0, t1);   glVertex2f(x0, y1);
+    }
+    //@formatter:on
 
     @Override
     public void drawRect(int x, int y, int width, int height) {

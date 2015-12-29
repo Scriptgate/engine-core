@@ -71,8 +71,8 @@ public class TextureLoader extends ImageLoader<Texture> {
     }
 
     private ByteBuffer convertImageData(BufferedImage bufferedImage, Texture texture) {
-        texture.setImageWidth(bufferedImage.getWidth());
-        texture.setImageHeight(bufferedImage.getHeight());
+        texture.setWidth(bufferedImage.getWidth());
+        texture.setHeight(bufferedImage.getHeight());
 
         BufferedImage textureImage;
         if (bufferedImage.getColorModel().hasAlpha()) {

@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
-import static org.lwjgl.demo.util.IOUtil.ioResourceToByteBuffer;
+import static net.scriptgate.engine.util.IOUtil.ioResourceToByteBuffer;
 import static org.lwjgl.glfw.Callbacks.glfwInvoke;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;

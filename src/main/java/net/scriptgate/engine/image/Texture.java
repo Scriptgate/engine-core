@@ -11,8 +11,8 @@ public class Texture {
     private int binaryHeight;
     private int height;
     private int width;
-    private float widthToBinaryWidthRatio;
-    private float heightToBinaryHeightRatio;
+    private float percentageOfTextureCoveredByImageX;
+    private float percentageOfTextureCoveredByImageY;
 
     public Texture(int textureID) {
         this.textureID = textureID;
@@ -22,47 +22,47 @@ public class Texture {
         GL11.glBindTexture(GL_TEXTURE_2D, textureID);
     }
 
-    public int getImageHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setImageHeight(int height) {
+    public void setHeight(int height) {
         this.height = height;
-        initializeHeightRatio();
+        this.binaryHeight = getBase2(this.height);
+        percentageOfTextureCoveredByImageY = ((float) this.height) / binaryHeight;
     }
 
-    public int getImageWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setImageWidth(int width) {
+    public void setWidth(int width) {
         this.width = width;
-        initializeWidthRatio();
+        this.binaryWidth = getBase2(this.width);
+        percentageOfTextureCoveredByImageX = ((float) this.width) / binaryWidth;
     }
 
-    public float getHeightToBinaryHeightRatio() {
-        return heightToBinaryHeightRatio;
+    public float getPercentageOfWidth(int x) {
+        return (float) (x) / getBinaryWidth();
     }
 
-    public float getWidthToBinaryWidthRatio() {
-        return widthToBinaryWidthRatio;
+    public float getPercentageOfHeight(int y) {
+        return (float) (y) / getBinaryHeight();
     }
 
-    private void initializeHeightRatio() {
-        this.binaryHeight = getBase2(height);
-        heightToBinaryHeightRatio = ((float) height) / binaryHeight;
+    public float s1() {
+        return percentageOfTextureCoveredByImageX;
     }
 
-    private void initializeWidthRatio() {
-        this.binaryWidth = getBase2(width);
-        widthToBinaryWidthRatio = ((float) width) / binaryWidth;
+    public float t1() {
+        return percentageOfTextureCoveredByImageY;
     }
 
-    public int getBinaryWidth() {
+    int getBinaryWidth() {
         return binaryWidth;
     }
 
-    public int getBinaryHeight() {
+    int getBinaryHeight() {
         return binaryHeight;
     }
 

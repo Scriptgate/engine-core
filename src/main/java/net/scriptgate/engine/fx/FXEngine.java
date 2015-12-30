@@ -7,7 +7,7 @@ import net.scriptgate.engine.Application;
 import net.scriptgate.engine.EngineAdapter;
 import net.scriptgate.engine.InputComponent;
 
-public class FXEngine extends EngineAdapter {
+public class FXEngine extends EngineAdapter<FXRenderer> {
 
     private final Canvas canvas;
 
@@ -77,7 +77,7 @@ public class FXEngine extends EngineAdapter {
 
         clearScreen(graphicsContext2D);
 
-        ((FXRenderer) renderer).loadContext(graphicsContext2D);
+        renderer.loadContext(graphicsContext2D);
 
         application.render(renderer);
     }

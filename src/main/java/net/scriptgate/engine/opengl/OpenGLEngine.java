@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 
-public class OpenGLEngine extends EngineAdapter {
+public class OpenGLEngine extends EngineAdapter<OpenGLRenderer> {
 
     private long window;
 
@@ -190,9 +190,13 @@ public class OpenGLEngine extends EngineAdapter {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glClearColor(BG_COLOR.r, BG_COLOR.g, BG_COLOR.b, 1.0f);
 
+        renderer.initialize();
+
+        //TODO: super hides functionality, perhaps it's better to manage application directly in OpenGLEngine (and possibly remove EngineAdapter)
+        super.initialize();
+
         glfwShowWindow(window);
         glfwInvoke(window, windowSizeCallback, framebufferSizeCallback);
-        super.initialize();
     }
 
     @Override
@@ -207,6 +211,8 @@ public class OpenGLEngine extends EngineAdapter {
     @Override
     public void destroy() {
         super.destroy();
+        renderer.destroy();
+
         try {
             if (debugCallback != null) {
                 debugCallback.release();

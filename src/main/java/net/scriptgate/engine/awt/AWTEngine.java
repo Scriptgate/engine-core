@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 
-public class AWTEngine extends EngineAdapter {
+public class AWTEngine extends EngineAdapter<AWTRenderer> {
 
     private final Canvas screen;
 
@@ -82,7 +82,7 @@ public class AWTEngine extends EngineAdapter {
         Graphics2D graphics = (Graphics2D) bs.getDrawGraphics();
         clearScreen(graphics);
 
-        ((AWTRenderer) renderer).loadGraphics(graphics);
+        renderer.loadGraphics(graphics);
         application.render(renderer);
 
         graphics.dispose();

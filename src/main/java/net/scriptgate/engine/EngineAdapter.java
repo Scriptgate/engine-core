@@ -1,11 +1,11 @@
 package net.scriptgate.engine;
 
-public class EngineAdapter extends Engine {
+public class EngineAdapter<T extends Renderer> extends Engine {
 
     protected final Application application;
-    protected final Renderer renderer;
+    protected final T renderer;
 
-    public EngineAdapter(Application application, Renderer renderer, InputComponent inputComponent) {
+    public EngineAdapter(Application application, T renderer, InputComponent inputComponent) {
         super(inputComponent);
         this.application = application;
         this.renderer = renderer;

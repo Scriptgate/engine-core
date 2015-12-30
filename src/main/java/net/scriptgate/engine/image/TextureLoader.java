@@ -33,7 +33,7 @@ public class TextureLoader extends ImageLoader<Texture> {
 
     @Override
     public Texture loadTexture(String path) {
-
+        glEnable(GL_TEXTURE_2D);
 
         int textureID = createTextureID();
         Texture texture = new Texture(textureID);
@@ -55,12 +55,15 @@ public class TextureLoader extends ImageLoader<Texture> {
 
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-                texture.getBinaryWidth(),
-                texture.getBinaryHeight(),
-                0, srcPixelFormat, GL_UNSIGNED_BYTE, textureBuffer);
+                texture.getBinaryWidth(), texture.getBinaryHeight(), 0,
+                srcPixelFormat, GL_UNSIGNED_BYTE, textureBuffer);
 
+        //The texture magnification function is used when the pixel being textured maps to an area less than or equal to one texture element
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        //The texture minifying function is used whenever the pixel being textured maps to an area greater than one texture element
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+        glDisable(GL_TEXTURE_2D);
 
         return texture;
     }

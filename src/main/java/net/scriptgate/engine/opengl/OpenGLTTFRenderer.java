@@ -21,15 +21,16 @@ class OpenGLTTFRenderer {
     private static FloatBuffer yBuffer;
     private STBTTAlignedQuad quad;
 
-    private final int fontHeight;
-    private final String fontFile;
+    //TODO: intialize font height and file through properties
+    private static final int FONT_HEIGHT = 8;
+    private static final String FONT_FILE = "fonts/Ricasso.ttf";
     private STBTTBakedChar.Buffer cdata;
     private int BITMAP_W;
     private int BITMAP_H;
 
-    public OpenGLTTFRenderer(int fontHeight, String fontFile) {
-        this.fontHeight = fontHeight;
-        this.fontFile = fontFile;
+    private int fontTextureId;
+
+    public OpenGLTTFRenderer() {
     }
 
     private static int[] toASCII(String text) {
@@ -50,16 +51,22 @@ class OpenGLTTFRenderer {
         cdata = STBTTBakedChar.mallocBuffer(96);
 
         try {
-            ByteBuffer ttf = IOUtil.ioResourceToByteBuffer(fontFile, 160 * 1024);
+            ByteBuffer ttf = IOUtil.ioResourceToByteBuffer(FONT_FILE, 160 * 1024);
             ByteBuffer bitmap = BufferUtils.createByteBuffer(BITMAP_W * BITMAP_H);
-            stbtt_BakeFontBitmap(ttf, fontHeight, bitmap, BITMAP_W, BITMAP_H, 32, cdata);
+            stbtt_BakeFontBitmap(ttf, FONT_HEIGHT, bitmap, BITMAP_W, BITMAP_H, 32, cdata);
 //          can free ttf at this point
-            int texID = glGenTextures();
-            glBindTexture(GL_TEXTURE_2D, texID);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, BITMAP_W, BITMAP_H, 0, GL_ALPHA, GL_UNSIGNED_BYTE, bitmap);
+            fontTextureId = glGenTextures();
+            glBindTexture(GL_TEXTURE_2D, fontTextureId);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA,
+                    BITMAP_W, BITMAP_H, 0,
+                    GL_ALPHA, GL_UNSIGNED_BYTE, bitmap);
 //          can free bitmap at this point
-//            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            //The texture magnification function is used when the pixel being textured maps to an area less than or equal to one texture element
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            //The texture minifying function is used whenever the pixel being textured maps to an area greater than one texture element
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -67,15 +74,13 @@ class OpenGLTTFRenderer {
     }
 
     public void render(int x, int y, String text) {
-
         glEnable(GL_TEXTURE_2D);
 
-        glColor3f(1, 1, 1);
+        glBindTexture(GL_TEXTURE_2D, fontTextureId);
 
         glPushMatrix();
 
-        glTranslatef(x, y + fontHeight, 0f);
-
+        glTranslatef(x, y + FONT_HEIGHT, 0f);
         glBegin(GL_QUADS);
         {
             FloatBuffer bX = getXBuffer();
@@ -118,5 +123,9 @@ class OpenGLTTFRenderer {
     public void destroy() {
         quad.free();
         MemoryUtil.memFree(cdata);
+    }
+
+    public int getFontHeight() {
+        return FONT_HEIGHT;
     }
 }

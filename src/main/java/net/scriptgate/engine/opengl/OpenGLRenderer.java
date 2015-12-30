@@ -19,10 +19,12 @@ public class OpenGLRenderer implements Renderer {
     private final Color4f color;
     private static final float DEG2RAD = 3.14159f / 180;
     private final ImageLoader<Texture> imageLoader;
+    private final OpenGLTTFRenderer fontRenderer;
 
     public OpenGLRenderer() {
         imageLoader = new TextureLoader();
         color = new Color4f(1, 1, 1, 1);
+        fontRenderer = new OpenGLTTFRenderer();
     }
 
     @Override
@@ -37,11 +39,9 @@ public class OpenGLRenderer implements Renderer {
         Texture texture = imageLoader.getTexture(path);
         int width = texture.getWidth();
         int height = texture.getHeight();
-
-        glPushMatrix();
-
         texture.bind();
 
+        glPushMatrix();
 //      middle center
 //      glTranslatef(x - width / 2, y - height / 2, 0);
 //      top middle
@@ -117,8 +117,9 @@ public class OpenGLRenderer implements Renderer {
      * @param t1 the y component of the second corner of the source rectangle.
      *           This is a percentage of the height of the texture.
      */
+    //TODO: make instance method
     //@formatter:off
-    static void drawBoxedTexCoords(float x0, float y0, float x1, float y1, float s0, float t0, float s1, float t1) {
+    public static void drawBoxedTexCoords(float x0, float y0, float x1, float y1, float s0, float t0, float s1, float t1) {
         glTexCoord2f(s0, t0);   glVertex2f(x0, y0);
         glTexCoord2f(s1, t0);   glVertex2f(x1, y0);
         glTexCoord2f(s1, t1);   glVertex2f(x1, y1);
@@ -149,6 +150,7 @@ public class OpenGLRenderer implements Renderer {
 
     @Override
     public void drawString(int x, int y, String text) {
+        fontRenderer.render(x, y, text);
     }
 
     @Override
@@ -271,5 +273,13 @@ public class OpenGLRenderer implements Renderer {
     @Override
     public void translate(int x, int y) {
         glTranslatef(x, y, 0);
+    }
+
+    public void destroy() {
+        fontRenderer.destroy();
+    }
+
+    public void initialize() {
+        fontRenderer.initialize();
     }
 }

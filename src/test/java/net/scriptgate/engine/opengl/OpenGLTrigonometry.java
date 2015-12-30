@@ -4,6 +4,7 @@ import net.scriptgate.engine.Application;
 import net.scriptgate.engine.InputComponent;
 import net.scriptgate.engine.Renderer;
 
+import static net.scriptgate.common.Color3f.*;
 import static net.scriptgate.engine.ApplicationHandlerBuilder.run;
 import static net.scriptgate.engine.ApplicationType.OPENGL;
 import static net.scriptgate.engine.Engine.HEIGHT;
@@ -99,15 +100,15 @@ public class OpenGLTrigonometry implements Application {
         }
 
         private void setXColor() {
-            renderer.setColor(0, 0, 1);
+            renderer.setColor(BLUE);
         }
 
         private void setYColor() {
-            renderer.setColor(0, 1, 0);
+            renderer.setColor(GREEN);
         }
 
         private void setRadialColor() {
-            renderer.setColor(1, 0, 0);
+            renderer.setColor(RED);
         }
 
         private void drawCosine() {

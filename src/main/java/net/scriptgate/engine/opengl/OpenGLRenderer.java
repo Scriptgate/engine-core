@@ -2,12 +2,13 @@ package net.scriptgate.engine.opengl;
 
 import net.scriptgate.common.Color4f;
 import net.scriptgate.common.Point;
+import net.scriptgate.common.Rectangle;
 import net.scriptgate.engine.Renderer;
 import net.scriptgate.engine.image.ImageLoader;
 import net.scriptgate.engine.image.Texture;
 import net.scriptgate.engine.image.TextureLoader;
 
-import java.awt.*;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import static java.lang.Math.cos;
@@ -25,11 +26,6 @@ public class OpenGLRenderer implements Renderer {
         imageLoader = new TextureLoader();
         color = new Color4f(1, 1, 1, 1);
         fontRenderer = new OpenGLTTFRenderer();
-    }
-
-    @Override
-    public void disableFont() {
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -77,8 +73,8 @@ public class OpenGLRenderer implements Renderer {
         glPushMatrix();
 
         int width = texture.getWidth();
-        int height = texture.getHeight();
 
+//      int height = texture.getHeight();
 //      middle center
 //      glTranslatef(position.x - width / 2, position.y - height / 2, 0);
 //      top left
@@ -117,9 +113,8 @@ public class OpenGLRenderer implements Renderer {
      * @param t1 the y component of the second corner of the source rectangle.
      *           This is a percentage of the height of the texture.
      */
-    //TODO: make instance method
     //@formatter:off
-    public static void drawBoxedTexCoords(float x0, float y0, float x1, float y1, float s0, float t0, float s1, float t1) {
+    public void drawBoxedTexCoords(float x0, float y0, float x1, float y1, float s0, float t0, float s1, float t1) {
         glTexCoord2f(s0, t0);   glVertex2f(x0, y0);
         glTexCoord2f(s1, t0);   glVertex2f(x1, y0);
         glTexCoord2f(s1, t1);   glVertex2f(x1, y1);
@@ -131,31 +126,27 @@ public class OpenGLRenderer implements Renderer {
     public void drawRect(int x, int y, int width, int height) {
         glDisable(GL_TEXTURE_2D);
 
-        glPushMatrix();
+        int adjustedWidthToBorder = width - 1;
+        int adjustedHeightToBorder = height - 1;
 
+        glPushMatrix();
         glTranslatef(x, y, 0);
         glBegin(GL_LINE_LOOP);
         {
             glVertex2f(0, 0);
-            glVertex2f(width, 0);
-            glVertex2f(width, height);
-            glVertex2f(0, height);
+            glVertex2f(adjustedWidthToBorder, 0);
+            glVertex2f(adjustedWidthToBorder, adjustedHeightToBorder);
+            glVertex2f(0, adjustedHeightToBorder);
         }
         glEnd();
-
         glPopMatrix();
 
         glEnable(GL_TEXTURE_2D);
     }
 
     @Override
-    public void drawString(int x, int y, String text) {
-        fontRenderer.render(x, y, text);
-    }
-
-    @Override
-    public void enableFont() {
-        throw new UnsupportedOperationException();
+    public Rectangle drawText(int x, int y, String text) {
+        return fontRenderer.render(this, x, y, text);
     }
 
     @Override
@@ -245,6 +236,11 @@ public class OpenGLRenderer implements Renderer {
     @Override
     public BufferedImage printScreen() {
         return OpenGLScreenshotHelper.getScreenshot();
+    }
+
+    @Override
+    public Rectangle getBounds(int x, int y, String text) {
+        return fontRenderer.getBounds(x, y, text);
     }
 
     @Override

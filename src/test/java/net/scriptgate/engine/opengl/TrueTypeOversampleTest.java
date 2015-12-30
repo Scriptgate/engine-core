@@ -219,13 +219,23 @@ public final class TrueTypeOversampleTest {
         glBegin(GL_QUADS);
         for (int i = 0; i < text.length(); i++) {
             stbtt_GetPackedQuad(chardata, BITMAP_W, BITMAP_H, text.charAt(i), xb, yb, q, font == 0 && integer_align ? 1 : 0);
-            OpenGLRenderer.drawBoxedTexCoords(
+            drawBoxedTexCoords(
                     q.x0(), q.y0(), q.x1(), q.y1(),
                     q.s0(), q.t0(), q.s1(), q.t1()
             );
         }
         glEnd();
     }
+
+    //TODO: Refactor TrueTypeOversampleTest to implement Application, use method on OpenGLRenderer
+    //@formatter:off
+    private void drawBoxedTexCoords(float x0, float y0, float x1, float y1, float s0, float t0, float s1, float t1) {
+        glTexCoord2f(s0, t0);   glVertex2f(x0, y0);
+        glTexCoord2f(s1, t0);   glVertex2f(x1, y0);
+        glTexCoord2f(s1, t1);   glVertex2f(x1, y1);
+        glTexCoord2f(s0, t1);   glVertex2f(x0, y1);
+    }
+    //@formatter:on
 
     private void draw_world() {
         int sfont = sf[font];
@@ -272,7 +282,7 @@ public final class TrueTypeOversampleTest {
 
         if (show_tex) {
             glBegin(GL_QUADS);
-            OpenGLRenderer.drawBoxedTexCoords(
+            drawBoxedTexCoords(
                     200, 400,
                     200 + BITMAP_W, 300 + BITMAP_H,
                     0, 0,

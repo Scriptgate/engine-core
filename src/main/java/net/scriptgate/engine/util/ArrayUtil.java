@@ -2,13 +2,11 @@ package net.scriptgate.engine.util;
 
 public class ArrayUtil {
 
-    public static void flipVertically(int[] input, int lineWidth, int numberOfLines)
-    {
+    public static void flipVertically(int[] input, int lineWidth, int numberOfLines) {
         int[] tempLine = new int[lineWidth];
         int half = numberOfLines / 2;
 
-        for (int i = 0; i < half; ++i)
-        {
+        for (int i = 0; i < half; ++i) {
             //copy current line to temp
             System.arraycopy(input, i * lineWidth, tempLine, 0, lineWidth);
             //copy bottom line to top

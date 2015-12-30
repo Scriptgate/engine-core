@@ -3,14 +3,12 @@ package net.scriptgate.engine;
 import net.scriptgate.common.Color3f;
 import net.scriptgate.common.Color4f;
 import net.scriptgate.common.Point;
+import net.scriptgate.common.Rectangle;
 
-import java.awt.*;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 public interface Renderer {
-    void enableFont();
-
-    void disableFont();
 
     void translate(int x, int y);
 
@@ -28,7 +26,7 @@ public interface Renderer {
 
     void setColor(float a, float r, float g, float b);
 
-    void drawString(int x, int y, String text);
+    Rectangle drawText(int x, int y, String text);
 
     void drawImage(int x, int y, String path);
 
@@ -37,10 +35,6 @@ public interface Renderer {
     void drawImage(String imagePath, Point position, Point offset, Point size);
 
     void drawLine(int x1, int y1, int x2, int y2);
-
-    default void drawLine(Point from, Point to) {
-        drawLine(from.x, from.y, to.x, to.y);
-    }
 
     void drawCircle(int x, int y, int radius);
 
@@ -51,4 +45,6 @@ public interface Renderer {
     void fillRect(int x, int y, int width, int height);
 
     BufferedImage printScreen();
+
+    Rectangle getBounds(int x, int y, String text);
 }

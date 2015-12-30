@@ -15,7 +15,7 @@ public class FileUtil {
 
         File result;
         do {
-            result = new File(parentDirectory, timestamp + (index == 1 ? "" : "_" + index) + "."+extension);
+            result = new File(parentDirectory, timestamp + (index == 1 ? "" : "_" + index) + "." + extension);
             ++index;
         } while (result.exists());
         return result;

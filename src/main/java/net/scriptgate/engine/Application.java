@@ -21,7 +21,7 @@ public interface Application {
     }
 
     default void destroy() {
-        
+
     }
 
     default void initializeProperties() {

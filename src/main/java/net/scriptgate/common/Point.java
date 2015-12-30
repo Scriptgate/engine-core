@@ -44,6 +44,7 @@ public class Point {
     }
 
     public static Point normalize(Point point) {
+        //noinspection SuspiciousNameCombination
         return new Point(
                 compare(point.x, 0),
                 compare(point.y, 0)
@@ -106,7 +107,7 @@ public class Point {
 
     @Override
     public boolean equals(Object other) {
-        if(other instanceof Point) {
+        if (other instanceof Point) {
             Point that = (Point) other;
             return this.x == that.x && this.y == that.y;
         } else {

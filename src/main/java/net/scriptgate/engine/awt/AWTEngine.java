@@ -4,7 +4,9 @@ import net.scriptgate.engine.Application;
 import net.scriptgate.engine.EngineAdapter;
 import net.scriptgate.engine.InputComponent;
 
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 

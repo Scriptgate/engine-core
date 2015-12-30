@@ -1,7 +1,3 @@
-/*
- * Copyright LWJGL. All rights reserved.
- * License terms: http://lwjgl.org/license.php
- */
 package net.scriptgate.engine.util;
 
 import org.lwjgl.BufferUtils;

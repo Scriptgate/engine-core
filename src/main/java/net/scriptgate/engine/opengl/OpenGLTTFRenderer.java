@@ -1,5 +1,6 @@
 package net.scriptgate.engine.opengl;
 
+import net.scriptgate.common.Rectangle;
 import net.scriptgate.engine.util.IOUtil;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBTTAlignedQuad;
@@ -53,7 +54,8 @@ class OpenGLTTFRenderer {
         try {
             ByteBuffer ttf = IOUtil.ioResourceToByteBuffer(FONT_FILE, 160 * 1024);
             ByteBuffer bitmap = BufferUtils.createByteBuffer(BITMAP_W * BITMAP_H);
-            stbtt_BakeFontBitmap(ttf, FONT_HEIGHT, bitmap, BITMAP_W, BITMAP_H, 32, cdata);
+//          TODO: 13 - 0.2f -> 12.8f gives RedAlert.tff a sharper look, artifacts still remain, needs some tuning
+            stbtt_BakeFontBitmap(ttf, FONT_HEIGHT - 0.2f, bitmap, BITMAP_W, BITMAP_H, 32, cdata);
 //          can free ttf at this point
             fontTextureId = glGenTextures();
             glBindTexture(GL_TEXTURE_2D, fontTextureId);
@@ -62,9 +64,7 @@ class OpenGLTTFRenderer {
                     GL_ALPHA, GL_UNSIGNED_BYTE, bitmap);
 //          can free bitmap at this point
 
-            //The texture magnification function is used when the pixel being textured maps to an area less than or equal to one texture element
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            //The texture minifying function is used whenever the pixel being textured maps to an area greater than one texture element
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
         } catch (IOException e) {
@@ -73,35 +73,59 @@ class OpenGLTTFRenderer {
         glDisable(GL_TEXTURE_2D);
     }
 
-    public void render(int x, int y, String text) {
+    public Rectangle render(OpenGLRenderer renderer, int x, int y, String text) {
         glEnable(GL_TEXTURE_2D);
+
+        int maxAboveBaseline = 0;
+        int maxBelowBaseline = 0;
 
         glBindTexture(GL_TEXTURE_2D, fontTextureId);
 
         glPushMatrix();
-
-        glTranslatef(x, y + FONT_HEIGHT, 0f);
+        //font is rendered from bottom to top, starting above coordinate-Y, offset by 1 pixel
+        glTranslatef(x, y + 1, 0f);
         glBegin(GL_QUADS);
         {
             FloatBuffer bX = getXBuffer();
             FloatBuffer bY = getYBuffer();
-            for (int c : toASCII(text)) {
-
-                stbtt_GetBakedQuad(cdata, BITMAP_W, BITMAP_H, c, bX, bY, quad, 1);
+            for (int character : toASCII(text)) {
+                stbtt_GetBakedQuad(cdata, BITMAP_W, BITMAP_H, character, bX, bY, quad, 1);
                 //TODO: remove static call
-                OpenGLRenderer.drawBoxedTexCoords(
+                renderer.drawBoxedTexCoords(
                         quad.x0(), quad.y0(),
                         quad.x1(), quad.y1(),
                         quad.s0(), quad.t0(),
                         quad.s1(), quad.t1()
                 );
+                maxAboveBaseline = Math.max(maxAboveBaseline, -(int) quad.y0());
+                maxBelowBaseline = Math.max(maxBelowBaseline, (int) quad.y1());
             }
         }
         glEnd();
-
         glPopMatrix();
 
         glDisable(GL_TEXTURE_2D);
+
+        return new Rectangle(
+                x, y + 1 - maxAboveBaseline,
+                (int) quad.x1(), maxAboveBaseline + maxBelowBaseline);
+    }
+
+    public Rectangle getBounds(int x, int y, String text) {
+        int maxAboveBaseline = 0;
+        int maxBelowBaseline = 0;
+
+        FloatBuffer bX = getXBuffer();
+        FloatBuffer bY = getYBuffer();
+        for (int character : toASCII(text)) {
+            stbtt_GetBakedQuad(cdata, BITMAP_W, BITMAP_H, character, bX, bY, quad, 1);
+            maxAboveBaseline = Math.min(maxAboveBaseline, (int) quad.y0());
+            maxBelowBaseline = Math.max(maxBelowBaseline, (int) quad.y1());
+        }
+
+        return new Rectangle(
+                x, y + maxAboveBaseline + 1,
+                (int) quad.x1(), -maxAboveBaseline + maxBelowBaseline);
     }
 
     private static FloatBuffer getXBuffer() {
@@ -123,9 +147,5 @@ class OpenGLTTFRenderer {
     public void destroy() {
         quad.free();
         MemoryUtil.memFree(cdata);
-    }
-
-    public int getFontHeight() {
-        return FONT_HEIGHT;
     }
 }

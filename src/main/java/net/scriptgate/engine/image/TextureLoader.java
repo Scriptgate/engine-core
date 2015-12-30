@@ -1,6 +1,7 @@
 package net.scriptgate.engine.image;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.color.ColorSpace;
 import java.awt.image.*;
 import java.nio.ByteBuffer;

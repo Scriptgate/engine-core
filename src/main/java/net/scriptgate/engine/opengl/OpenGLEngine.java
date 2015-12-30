@@ -93,9 +93,11 @@ public class OpenGLEngine extends EngineAdapter<OpenGLRenderer> {
 
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
-                glOrtho(0.0, width, height, 0.0, -1.0, 1.0);
+
+                glOrtho(0.0f, width, height, 0.0f, -1.0f, 1.0f);
                 glMatrixMode(GL_MODELVIEW);
                 glLoadIdentity();
+                glTranslatef(0.375f, 0.375f, 0.0f);
             }
         };
 

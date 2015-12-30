@@ -4,8 +4,9 @@ import net.scriptgate.engine.Application;
 import net.scriptgate.engine.ApplicationHandler;
 import net.scriptgate.engine.Engine;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 

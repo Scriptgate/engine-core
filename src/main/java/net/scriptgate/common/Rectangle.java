@@ -6,6 +6,14 @@ public class Rectangle {
     public int width;
     public int height;
 
+    public Rectangle() {
+        this(0, 0, 0, 0);
+    }
+
+    public Rectangle(int width, int height) {
+        this(0, 0, width, height);
+    }
+
     public Rectangle(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
@@ -13,9 +21,6 @@ public class Rectangle {
         this.height = height;
     }
 
-    public Rectangle(int width, int height) {
-        this(0, 0, width, height);
-    }
 
     public boolean contains(int x, int y) {
         return x >= this.x && x < this.x + this.width &&

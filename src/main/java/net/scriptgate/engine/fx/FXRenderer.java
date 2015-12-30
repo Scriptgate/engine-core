@@ -3,9 +3,10 @@ package net.scriptgate.engine.fx;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import net.scriptgate.common.Point;
+import net.scriptgate.common.Rectangle;
 import net.scriptgate.engine.Renderer;
 
-import java.awt.*;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 public class FXRenderer implements Renderer {
@@ -16,16 +17,6 @@ public class FXRenderer implements Renderer {
 
     public void loadContext(GraphicsContext context) {
         this.context = context;
-    }
-
-    @Override
-    public void enableFont() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void disableFont() {
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -49,8 +40,9 @@ public class FXRenderer implements Renderer {
     }
 
     @Override
-    public void drawString(int x, int y, String text) {
+    public Rectangle drawText(int x, int y, String text) {
         context.strokeText(text, x, y);
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -100,6 +92,11 @@ public class FXRenderer implements Renderer {
 
     @Override
     public BufferedImage printScreen() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Rectangle getBounds(int x, int y, String text) {
         throw new UnsupportedOperationException();
     }
 }

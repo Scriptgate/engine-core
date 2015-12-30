@@ -2,11 +2,15 @@ package net.scriptgate.engine.awt;
 
 import net.scriptgate.common.Color4f;
 import net.scriptgate.common.Point;
+import net.scriptgate.common.Rectangle;
 import net.scriptgate.engine.Renderer;
 import net.scriptgate.engine.image.BufferedImageLoader;
 import net.scriptgate.engine.image.ImageLoader;
 
-import java.awt.*;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
@@ -59,8 +63,9 @@ public class AWTRenderer implements Renderer {
     }
 
     @Override
-    public void drawString(int x, int y, String text) {
+    public Rectangle drawText(int x, int y, String text) {
         graphics.drawString(text, x, y);
+        throw new UnsupportedOperationException("See Graphics.getFontMetrics() and FontMetrics.stringWidth()");
     }
 
     @Override
@@ -116,14 +121,12 @@ public class AWTRenderer implements Renderer {
         graphics.translate(x, y);
     }
 
-    @Override
     public void enableFont() {
         requireNonNull(font);
         this.graphics.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_ON);
         this.graphics.setFont(font);
     }
 
-    @Override
     public void disableFont() {
         requireNonNull(font);
         this.graphics.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_OFF);
@@ -159,6 +162,11 @@ public class AWTRenderer implements Renderer {
 
     @Override
     public BufferedImage printScreen() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Rectangle getBounds(int x, int y, String text) {
         throw new UnsupportedOperationException();
     }
 }

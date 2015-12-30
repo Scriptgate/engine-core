@@ -1,7 +1,8 @@
 package net.scriptgate.engine.image;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.GraphicsConfiguration;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.IOException;

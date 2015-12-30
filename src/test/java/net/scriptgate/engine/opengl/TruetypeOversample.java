@@ -1,7 +1,3 @@
-/*
- * Copyright LWJGL. All rights reserved.
- * License terms: http://lwjgl.org/license.php
- */
 package net.scriptgate.engine.opengl;
 
 import org.lwjgl.BufferUtils;
@@ -26,20 +22,14 @@ import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_SRGB;
 import static org.lwjgl.stb.STBTruetype.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-/**
- * STB TrueType oversampling demo.
- * <p>
- * <p>This is a Java port of <a href="https://github.com/nothings/stb/blob/master/tests/oversample/main.c">https://github
- * .com/nothings/stb/blob/master/tests/oversample/main.c</a>.</p>
- */
 public final class TrueTypeOversample {
 
     private static final int BITMAP_W = 512;
     private static final int BITMAP_H = 512;
 
     private static final float[] scale = {
-            24.0f,
-            14.0f
+            14.0f,
+            8.0f
     };
 
     private static final int[] sf = {
@@ -302,6 +292,11 @@ public final class TrueTypeOversample {
             print(x, 130, font, "Now is the time for all good men to come to the aid of their country.");
             print(x, 160, font, "The quick brown fox jumps over the lazy dog.");
             print(x, 190, font, "0123456789");
+
+            print(x, 220, font, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            print(x, 250, font, "abcdefghijklmnopqrstuvwxyz");
+            print(x, 280, font, "0123456789");
+            print(x, 310, font, "! @ # $ % ^ & * ( ) - _ + = { } [ ] : ; ' \" < > ? , . / \\ | ~ `");
         }
     }
 

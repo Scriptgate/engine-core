@@ -22,7 +22,7 @@ import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_SRGB;
 import static org.lwjgl.stb.STBTruetype.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-public final class TrueTypeOversample {
+public final class TrueTypeOversampleTest {
 
     private static final int BITMAP_W = 512;
     private static final int BITMAP_H = 512;
@@ -78,22 +78,22 @@ public final class TrueTypeOversample {
 
     private boolean show_tex;
 
-    private TrueTypeOversample() {
+    private TrueTypeOversampleTest() {
         errorfun = GLFWErrorCallback.createPrint();
 
         windowSizefun = new GLFWWindowSizeCallback() {
             @Override
             public void invoke(long window, int width, int height) {
-                TrueTypeOversample.this.ww = width;
-                TrueTypeOversample.this.wh = height;
+                TrueTypeOversampleTest.this.ww = width;
+                TrueTypeOversampleTest.this.wh = height;
             }
         };
 
         framebufferSizefun = new GLFWFramebufferSizeCallback() {
             @Override
             public void invoke(long window, int width, int height) {
-                TrueTypeOversample.this.fbw = width;
-                TrueTypeOversample.this.fbh = height;
+                TrueTypeOversampleTest.this.fbw = width;
+                TrueTypeOversampleTest.this.fbh = height;
             }
         };
 
@@ -146,7 +146,7 @@ public final class TrueTypeOversample {
     }
 
     public static void main(String[] args) {
-        new TrueTypeOversample().run("STB TrueType Oversample Demo");
+        new TrueTypeOversampleTest().run("STB TrueType Oversample Demo");
     }
 
     private void load_fonts() {

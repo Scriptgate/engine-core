@@ -27,9 +27,11 @@ public final class TrueTypeOversampleTest {
     private static final int BITMAP_W = 512;
     private static final int BITMAP_H = 512;
 
+    private static final String fontFile = "fonts/RedAlert.ttf";
+
     private static final float[] scale = {
-            14.0f,
-            8.0f
+            13f,
+            13f
     };
 
     private static final int[] sf = {
@@ -154,7 +156,7 @@ public final class TrueTypeOversampleTest {
         chardata = STBTTPackedchar.mallocBuffer(6 * 128);
 
         try {
-            ByteBuffer ttf = ioResourceToByteBuffer("demo/FiraSans.ttf", 160 * 1024);
+            ByteBuffer ttf = ioResourceToByteBuffer(fontFile, 160 * 1024);
 
             ByteBuffer bitmap = BufferUtils.createByteBuffer(BITMAP_W * BITMAP_H);
 
@@ -178,8 +180,8 @@ public final class TrueTypeOversampleTest {
 
             glBindTexture(GL_TEXTURE_2D, font_tex);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, BITMAP_W, BITMAP_H, 0, GL_ALPHA, GL_UNSIGNED_BYTE, bitmap);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

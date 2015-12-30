@@ -16,7 +16,7 @@ public final class TrueTypeDemo extends FontDemo {
 
     private TrueTypeDemo(String filePath) {
         super(14, filePath);
-        fontRenderer = new TrueTypeFontRenderer(14, "demo/Fantasque.ttf");
+        fontRenderer = new TrueTypeFontRenderer(13, "fonts/RedAlert.ttf");
     }
 
     public static void main(String[] args) {

@@ -164,7 +164,7 @@ public final class TrueTypeOversampleDemo {
 		chardata = STBTTPackedchar.mallocBuffer(6 * 128);
 
 		try {
-			ByteBuffer ttf = ioResourceToByteBuffer("fonts/Ricasso.ttf", 160 * 1024);
+			ByteBuffer ttf = ioResourceToByteBuffer("fonts/RedAlert.ttf", 160 * 1024);
 
 			ByteBuffer bitmap = BufferUtils.createByteBuffer(BITMAP_W * BITMAP_H);
 

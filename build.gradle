@@ -17,6 +17,7 @@ dependencies {
     workaround is to manually put resources on the classpath as a runtime dependency
      */
     runtime files('src/main/resources')
+    testRuntime files('src/test/resources')
     compile group: 'org.lwjgl', name:'lwjgl', version:'3.0.0b'
     compile 'org.lwjgl:lwjgl-platform:3.0.0b:natives-windows'
     compile group: 'org.slf4j', name:'slf4j-api', version:'1.7.13'

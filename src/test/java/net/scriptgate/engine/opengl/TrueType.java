@@ -17,6 +17,8 @@ public class TrueType implements Application {
     private OpenGLTTFRenderer fontRenderer;
 
     public TrueType() {
+        OpenGLTTFRenderer.FONT_HEIGHT = 13;
+        OpenGLTTFRenderer.FONT_FILE = "fonts/RedAlert.ttf";
         this.fontRenderer = new OpenGLTTFRenderer();
     }
 
@@ -35,6 +37,9 @@ public class TrueType implements Application {
     public void render(Renderer renderer) {
         int textY = 100;
 
+        fontRenderer.render(100, textY, "STOR320");
+        textY += 5 + fontRenderer.getFontHeight();
+
         fontRenderer.render(100, textY, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         textY += 5 + fontRenderer.getFontHeight();
 
@@ -44,7 +49,7 @@ public class TrueType implements Application {
         fontRenderer.render(100, textY, "0123456789");
         textY += 5 + fontRenderer.getFontHeight();
 
-        fontRenderer.render(100, textY, "! @ # $ % ^ & * ( ) - _ + = { } [ ] : ; ' \" < > ? , . / \\ | ~ `");
+        fontRenderer.render(100, textY, "!@#$%^&*()-_+={}[]:;'\"<>?,./\\|~`");
 
 
         renderer.drawImage(256, 220, "images/testTile");

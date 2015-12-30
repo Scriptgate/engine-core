@@ -22,8 +22,8 @@ class OpenGLTTFRenderer {
     private STBTTAlignedQuad quad;
 
     //TODO: intialize font height and file through properties
-    private static final int FONT_HEIGHT = 8;
-    private static final String FONT_FILE = "fonts/Ricasso.ttf";
+    public static int FONT_HEIGHT = 13;
+    public static String FONT_FILE = "fonts/RedAlert.ttf";
     private STBTTBakedChar.Buffer cdata;
     private int BITMAP_W;
     private int BITMAP_H;

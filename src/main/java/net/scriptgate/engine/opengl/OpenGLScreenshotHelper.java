@@ -19,8 +19,10 @@ public class OpenGLScreenshotHelper {
     private static IntBuffer buffer;
     private static int[] pixels;
 
-    public static String saveScreenshot(File outputDirectory, int displayWidth, int displayHeight) {
-        return saveScreenshot(outputDirectory, null, displayWidth, displayHeight);
+    private static File screenshotFolder = new File("screenshots");
+
+    public static String saveScreenshot(int displayWidth, int displayHeight) {
+        return saveScreenshot(null, displayWidth, displayHeight);
     }
 
     public static BufferedImage getScreenshot() {
@@ -48,9 +50,8 @@ public class OpenGLScreenshotHelper {
     }
 
 
-    public static String saveScreenshot(File outputDirectory, String fileName, int displayWidth, int displayHeight) {
+    public static String saveScreenshot(String fileName, int displayWidth, int displayHeight) {
         try {
-            File screenshotFolder = new File(outputDirectory, "screenshots");
             //noinspection ResultOfMethodCallIgnored
             screenshotFolder.mkdir();
 

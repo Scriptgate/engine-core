@@ -32,7 +32,7 @@ import static org.lwjgl.system.MemoryUtil.*;
  * <p>This is a Java port of <a href="https://github.com/nothings/stb/blob/master/tests/oversample/main.c">https://github
  * .com/nothings/stb/blob/master/tests/oversample/main.c</a>.</p>
  */
-public final class TruetypeOversample {
+public final class TrueTypeOversampleDemo {
 
 	private static final int BITMAP_W = 512;
 	private static final int BITMAP_H = 512;
@@ -88,22 +88,22 @@ public final class TruetypeOversample {
 
 	private boolean show_tex;
 
-	private TruetypeOversample() {
+	private TrueTypeOversampleDemo() {
 		errorfun = GLFWErrorCallback.createPrint();
 
 		windowSizefun = new GLFWWindowSizeCallback() {
 			@Override
 			public void invoke(long window, int width, int height) {
-				TruetypeOversample.this.ww = width;
-				TruetypeOversample.this.wh = height;
+				TrueTypeOversampleDemo.this.ww = width;
+				TrueTypeOversampleDemo.this.wh = height;
 			}
 		};
 
 		framebufferSizefun = new GLFWFramebufferSizeCallback() {
 			@Override
 			public void invoke(long window, int width, int height) {
-				TruetypeOversample.this.fbw = width;
-				TruetypeOversample.this.fbh = height;
+				TrueTypeOversampleDemo.this.fbw = width;
+				TrueTypeOversampleDemo.this.fbh = height;
 			}
 		};
 
@@ -156,7 +156,7 @@ public final class TruetypeOversample {
 	}
 
 	public static void main(String[] args) {
-		new TruetypeOversample().run("STB TrueType Oversample Demo");
+		new TrueTypeOversampleDemo().run("STB TrueType Oversample Demo");
 	}
 
 	private void load_fonts() {

@@ -10,11 +10,11 @@ import static org.lwjgl.opengl.GL11.*;
 /**
  * STB TrueType demo.
  */
-public final class Truetype extends FontDemo {
+public final class TrueTypeDemo extends FontDemo {
 
     private TrueTypeFontRenderer fontRenderer;
 
-    private Truetype(String filePath) {
+    private TrueTypeDemo(String filePath) {
         super(14, filePath);
         fontRenderer = new TrueTypeFontRenderer(14, "demo/Fantasque.ttf");
     }
@@ -22,12 +22,12 @@ public final class Truetype extends FontDemo {
     public static void main(String[] args) {
         String filePath;
         if (args.length == 0) {
-            System.out.println("Use 'ant demo -Dclass=org.lwjgl.demo.stb.TrueType -Dargs=<path>' to load a different text file (must be UTF8-encoded).\n");
+            System.out.println("Use 'ant demo -Dclass=org.lwjgl.demo.stb.TrueTypeDemo -Dargs=<path>' to load a different text file (must be UTF8-encoded).\n");
             filePath = "demo/fontTest.txt";
         } else
             filePath = args[0];
 
-        new Truetype(filePath).run("STB TrueType Demo");
+        new TrueTypeDemo(filePath).run("STB TrueType Demo");
     }
 
     @Override

@@ -43,7 +43,7 @@ public class OpenGLTrigonometry implements Application {
     }
 
     private void renderBackground(Renderer renderer) {
-        renderer.setColor(1, 1, 1, 1);
+        renderer.setColor(1, WHITE);
         renderer.fillRect(0, 0, WIDTH, HEIGHT);
     }
 
@@ -82,7 +82,7 @@ public class OpenGLTrigonometry implements Application {
             this.radius = radius;
             this.angle = angle;
 
-            renderer.setColor(0.5f, 0, 0, 0);
+            renderer.setColor(0.5f, BLACK);
             renderer.drawCircle(0, 0, radius);
             renderer.drawLine(
                     -radius, -HEIGHT / 2,

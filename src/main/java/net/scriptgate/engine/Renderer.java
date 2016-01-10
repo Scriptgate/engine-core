@@ -16,6 +16,10 @@ public interface Renderer {
         setColor(color.r, color.g, color.b);
     }
 
+    default void setColor(float a, Color3f color) {
+        setColor(a, color.r, color.g, color.b);
+    }
+
     default void setColor(Color4f color) {
         setColor(color.a, color.r, color.g, color.b);
     }

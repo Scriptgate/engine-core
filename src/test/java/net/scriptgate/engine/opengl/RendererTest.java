@@ -45,19 +45,19 @@ public abstract class RendererTest implements Application {
     public void onKeyDown(int key) {
         switch (key) {
             case GLFW_KEY_RIGHT:
-                int indexOfNextTextCase = testCases.indexOf(testCase) + 1;
-                if (indexOfNextTextCase >= testCases.size()) {
+                int indexOfNextTestCase = testCases.indexOf(testCase) + 1;
+                if (indexOfNextTestCase >= testCases.size()) {
                     testCase = testCases.get(0);
                 } else {
-                    testCase = testCases.get(indexOfNextTextCase);
+                    testCase = testCases.get(indexOfNextTestCase);
                 }
                 break;
             case GLFW_KEY_LEFT:
-                int indexOfPreviousTextCase = testCases.indexOf(testCase) - 1;
-                if (indexOfPreviousTextCase < 0) {
+                int indexOfPreviousTestCase = testCases.indexOf(testCase) - 1;
+                if (indexOfPreviousTestCase < 0) {
                     testCase = testCases.get(testCases.size() - 1);
                 } else {
-                    testCase = testCases.get(indexOfPreviousTextCase);
+                    testCase = testCases.get(indexOfPreviousTestCase);
                 }
                 break;
         }

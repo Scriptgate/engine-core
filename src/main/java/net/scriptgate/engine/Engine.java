@@ -33,7 +33,7 @@ public abstract class Engine implements Runnable {
     private boolean initialized = true;
 
     private boolean running = false;
-    protected boolean verticalSyncDisabled = false;
+    public static boolean verticalSyncDisabled = false;
 
     protected Engine(InputComponent inputComponent) {
         this.scheduler = newSingleThreadExecutor();

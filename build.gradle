@@ -1,13 +1,16 @@
+group 'net.scriptgate'
+version '1.0-SNAPSHOT'
+
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
-version = '1.0'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    compile project(':engine-api')
     /*
     When building with Gradle, resources are stored in build/resources,
     they're however not added to the classpath.
@@ -18,8 +21,6 @@ dependencies {
      */
     runtime files('src/main/resources')
     testRuntime files('src/test/resources')
-    compile group: 'org.lwjgl', name:'lwjgl', version:'3.0.0b'
-    compile 'org.lwjgl:lwjgl-platform:3.0.0b:natives-windows'
     compile group: 'org.slf4j', name:'slf4j-api', version:'1.7.13'
     compile group: 'org.slf4j', name:'slf4j-simple', version:'1.7.13'
     compile group: 'com.fasterxml.jackson.core', name:'jackson-core', version:'2.6.2'

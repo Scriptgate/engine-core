@@ -1,1 +1,5 @@
-rootProject.name = 'Engine'
+include ':engine-api'
+
+project(':engine-api').projectDir = file('../engine-api')
+
+rootProject.name = 'engine-core'

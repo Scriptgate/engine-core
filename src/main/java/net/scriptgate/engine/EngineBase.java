@@ -2,7 +2,6 @@ package net.scriptgate.engine;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.scriptgate.common.Color3f;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,13 +11,8 @@ import static java.lang.System.currentTimeMillis;
 import static java.lang.System.nanoTime;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
-public abstract class Engine implements Runnable {
+public abstract class EngineBase implements Runnable {
 
-    public static int WIDTH;
-    public static int HEIGHT;
-    public static Color3f BG_COLOR = Color3f.fromInt(43, 43, 43);
-
-    public static String TITLE;
     protected final ExecutorService scheduler;
     protected long lastTime;
     private long maximumTicksPerRun;
@@ -33,9 +27,8 @@ public abstract class Engine implements Runnable {
     private boolean initialized = true;
 
     private boolean running = false;
-    public static boolean verticalSyncDisabled = false;
 
-    protected Engine(InputComponent inputComponent) {
+    protected EngineBase(InputComponent inputComponent) {
         this.scheduler = newSingleThreadExecutor();
         this.inputComponent = inputComponent;
     }
@@ -60,7 +53,7 @@ public abstract class Engine implements Runnable {
 
         accumulator += unprocessed;
 
-        boolean shouldRender = verticalSyncDisabled;
+        boolean shouldRender = Engine.verticalSyncDisabled;
 
         while (accumulator >= 1) {
             accumulator -= 1;
@@ -96,15 +89,15 @@ public abstract class Engine implements Runnable {
 
     protected void initializeProperties() {
         ObjectMapper mapper = new ObjectMapper();
-        try (InputStream engineProperties = Engine.class.getClassLoader().getResourceAsStream("properties/engine.json")) {
+        try (InputStream engineProperties = EngineBase.class.getClassLoader().getResourceAsStream("properties/engine.json")) {
             JsonNode properties = mapper.readTree(engineProperties);
-            WIDTH = properties.path("width").asInt();
-            HEIGHT = properties.path("height").asInt();
-            TITLE = properties.path("title").asText();
+            Engine.WIDTH = properties.path("width").asInt();
+            Engine.HEIGHT = properties.path("height").asInt();
+            Engine.TITLE = properties.path("title").asText();
             maximumTicksPerRun = properties.path("maximumTicksPerRun").asLong();
             ticksPerRun = properties.path("ticksPerRun").asInt();
             msPerUpdate = properties.path("msPerUpdate").asInt();
-            verticalSyncDisabled = properties.path("verticalSyncDisabled").asBoolean();
+            Engine.verticalSyncDisabled = properties.path("verticalSyncDisabled").asBoolean();
         } catch (IOException ex) {
             throw new RuntimeException("Exception loading engine properties", ex);
         }

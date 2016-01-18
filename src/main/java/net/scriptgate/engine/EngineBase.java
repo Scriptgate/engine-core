@@ -58,7 +58,7 @@ public abstract class EngineBase implements Runnable {
         while (accumulator >= 1) {
             accumulator -= 1;
             ticks++;
-            onTick(inputComponent, nsPerTick / 1_000_000);
+            onTick(inputComponent, (Engine.SPEED / 100.0f) * nsPerTick / 1_000_000);
             shouldRender = true;
         }
 

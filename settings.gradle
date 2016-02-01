@@ -1,4 +1,4 @@
-include ':engine-api'
+includeFlat 'engine-api'
 
 project(':engine-api').projectDir = file('../engine-api')
 

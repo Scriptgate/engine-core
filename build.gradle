@@ -28,3 +28,12 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name:'jackson-core', version:'2.6.2'
     compile group: 'com.fasterxml.jackson.core', name:'jackson-databind', version:'2.6.2'
 }
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}

@@ -1,7 +1,8 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
 group 'net.scriptgate.engine'
 version '0.0.1-SNAPSHOT'
-
-apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
@@ -22,18 +23,31 @@ dependencies {
     workaround is to manually put resources on the classpath as a runtime dependency
      */
     runtime files('src/main/resources')
-    compile group: 'net.scriptgate.engine', name:'engine-api', version:'0.0.1-SNAPSHOT'
-    compile group: 'org.slf4j', name:'slf4j-api', version:'1.7.13'
-    compile group: 'org.slf4j', name:'slf4j-simple', version:'1.7.13'
-    compile group: 'com.fasterxml.jackson.core', name:'jackson-core', version:'2.6.2'
-    compile group: 'com.fasterxml.jackson.core', name:'jackson-databind', version:'2.6.2'
+    compile group: 'net.scriptgate.engine', name: 'engine-api', version: '0.0.1-SNAPSHOT', changing: true
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.6.2'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.6.2'
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, "seconds"
+}
+
+task createPom << {
+    pom {
+        project {
+            groupId project.group
+            artifactId project.name
+            version project.version
+            description 'POM was created with Gradle'
+        }
+    }.writeTo("${project.libsDir}/${project.name}-${project.version}.pom")
+}
+
+task sourceJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
 }
 
 artifacts {
-    archives sourcesJar
+    archives sourceJar
 }
